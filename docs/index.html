@@ -2,9 +2,9 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
-  <title>Can Kayan · Gitar</title>
+  <title>Can Kayan Gitar Dersleri</title>
   <script>
     // Sayfa yalnızca QR koddaki link ile açılır: https://www.cankayan.com.tr/?qrvalue=dYGYGMZd
     var QR_DEGERI = "dYGYGMZd";
@@ -16,85 +16,208 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Tek sütun, sade bölümler; mevcut sitenin krem + kırmızı çizgisi */
+    :root {
+      --bg: #fdf8f2;
+      --yuzey: #ffffff;
+      --yazi: #2e2a33;
+      --soluk: #6f6874;
+      --vurgu: #d63f32;
+      --vurgu-acik: #fde4df;
+      --cizgi: #efe4d8;
+      --font: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1d1a1f; --yuzey: #29252b; --yazi: #f2ece6; --soluk: #b3aab5;
+        --vurgu: #ff7a6b; --vurgu-acik: #45282a; --cizgi: #3a3438;
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #1d1a1f; --yuzey: #29252b; --yazi: #f2ece6; --soluk: #b3aab5;
+      --vurgu: #ff7a6b; --vurgu-acik: #45282a; --cizgi: #3a3438;
+      color-scheme: dark;
+    }
+
     body {
       margin: 0;
-      background: #fdf8f2;
-      color: #2e2a33;
-      font: 400 18px/1.7 "Nunito", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--yazi);
+      font: 400 17px/1.7 var(--font);
     }
-    main { max-width: 640px; margin: 0 auto; padding: 56px 16px; }
-    img { width: 100%; height: auto; display: block; border-radius: 20px; }
-    h1 { font-size: 40px; font-weight: 800; line-height: 1.1; margin: 32px 0 4px; }
-    h2 { font-size: 20px; margin: 36px 0 8px; }
-    .unvan { color: #e2483b; font-weight: 700; margin: 0 0 24px; }
-    p { margin: 0 0 14px; }
-    ul { list-style: none; padding: 0; margin: 0; }
-    li { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    a { color: #e2483b; }
+    main {
+      max-width: 720px; margin: 0 auto;
+      padding-block: 48px 40px;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      display: grid; gap: 56px;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
+    h1 { font-size: clamp(32px, 6vw, 44px); font-weight: 800; }
+    h2 { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
+    h3 { font-size: 17px; font-weight: 800; }
+    p { margin: 0; }
+    a { color: var(--vurgu); }
+    a:focus-visible { outline: 3px solid var(--vurgu); outline-offset: 3px; border-radius: 6px; }
+
+    .ust-baslik {
+      font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--vurgu); margin-bottom: 8px;
+    }
+    .soluk { color: var(--soluk); }
+
+    /* Üst kısım */
+    .giris { display: grid; gap: 24px; }
+    .giris img { border-radius: 20px; }
+    .giris .metin { display: grid; gap: 14px; }
+    .buton {
+      justify-self: start;
+      display: inline-block; padding: 12px 24px; border-radius: 999px;
+      background: var(--vurgu); color: var(--bg); font-weight: 800; text-decoration: none;
+    }
+
+    /* İkonlu maddeler */
     .ikon {
-      width: 34px; height: 34px; flex: none;
+      width: 38px; height: 38px; flex: none;
       display: grid; place-items: center;
-      background: #fde4df; color: #e2483b; border-radius: 50%;
+      background: var(--vurgu-acik); color: var(--vurgu); border-radius: 50%;
     }
     .ikon svg {
-      width: 18px; height: 18px;
+      width: 19px; height: 19px;
       fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
     }
-    .iletisim a { color: inherit; text-decoration: none; }
-    .iletisim a:hover { color: #e2483b; }
-    footer { margin-top: 48px; font-size: 13px; color: #8a838e; }
+    .maddeler { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .madde { display: flex; gap: 14px; min-width: 0; }
+    .madde p { font-size: 15.5px; color: var(--soluk); }
+
+    /* Adımlar */
+    .adimlar { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: adim; }
+    .adimlar li { counter-increment: adim; border-top: 3px solid var(--vurgu); padding-top: 12px; min-width: 0; }
+    .adimlar li::before { content: counter(adim); font-weight: 800; color: var(--vurgu); font-size: 15px; }
+    .adimlar p { font-size: 15.5px; color: var(--soluk); }
+
+    /* Ders seçenekleri */
+    .secenekler { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+    .secenek { background: var(--yuzey); border: 1.5px solid var(--cizgi); border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px; }
+    .secenek p { font-size: 15.5px; color: var(--soluk); }
+
+    /* İletişim */
+    .iletisim { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .iletisim li { display: flex; align-items: center; gap: 14px; }
+    .iletisim a { color: inherit; text-decoration: none; font-weight: 700; }
+    .iletisim a:hover { color: var(--vurgu); }
+
+    footer { font-size: 13px; color: var(--soluk); border-top: 1px solid var(--cizgi); padding-top: 16px; }
     footer a { color: inherit; }
+
     main, .acik .kapali { display: none; }
-    .acik main { display: block; }
-    .kapali { min-height: 100vh; display: grid; place-items: center; padding: 16px; text-align: center; color: #8a838e; }
+    .acik main { display: grid; }
+    .kapali { min-height: 100vh; display: grid; place-items: center; padding: 16px; text-align: center; color: var(--soluk); }
+
+    @media (max-width: 600px) {
+      main { gap: 44px; padding-block: 28px 32px; }
+      .maddeler, .adimlar, .secenekler { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <div class="kapali">Bu sayfaya yalnızca QR kod ile erişilebilir.</div>
   <main>
-    <img src="images/gitar-kirmizi.jpg" alt="Kırmızı elektro gitar" width="960" height="720">
+    <header class="giris">
+      <img src="images/gitar-kirmizi.jpg" alt="Kırmızı elektro gitar" width="960" height="720">
+      <div class="metin">
+        <div>
+          <div class="ust-baslik">Elektro ve akustik gitar dersleri</div>
+          <h1>Can Kayan ile gitar öğren</h1>
+        </div>
+        <p class="soluk">
+          Birebir ve online derslerde tekniği, müzik teorisini ve sevdiğin şarkıları birlikte çalışıyoruz.
+          Hiç başlamamış olsan da, yıllardır çalıyor olsan da sana uygun bir yol çizeriz.
+        </p>
+        <a class="buton" href="#iletisim">Deneme dersi için yaz</a>
+      </div>
+    </header>
 
-    <h1>Can Kayan</h1>
-    <p class="unvan">Mühendis · Gitarist</p>
+    <section>
+      <h2>Derslerde neler var?</h2>
+      <div class="maddeler">
+        <div class="madde">
+          <span class="ikon"><svg><use href="#i-gitar"/></svg></span>
+          <div><h3>Teknik ve ritim</h3><p>Doğru duruş, pena tekniği, temiz akor geçişleri ve metronomla ritim çalışması.</p></div>
+        </div>
+        <div class="madde">
+          <span class="ikon"><svg><use href="#i-kitap"/></svg></span>
+          <div><h3>Müzik teorisi</h3><p>Aralıklar, gamlar ve akorlar. Ezberlemek yerine mantığını anlayarak.</p></div>
+        </div>
+        <div class="madde">
+          <span class="ikon"><svg><use href="#i-nota"/></svg></span>
+          <div><h3>Sevdiğin şarkılar</h3><p>Her seviyede, senin dinlediğin müzikten seçilmiş parçalar.</p></div>
+        </div>
+        <div class="madde">
+          <span class="ikon"><svg><use href="#i-takvim"/></svg></span>
+          <div><h3>Haftalık çalışma planı</h3><p>Her dersin sonunda o haftaya özel kısa ödevler.</p></div>
+        </div>
+      </div>
+    </section>
 
-    <p>
-      Altı yaşından beri müzikle iç içeyim. Yolculuğuma piyanoyla başladım.
-      On iki yaşımda gitarla tanıştım ve o günden beri elimden bırakmadım.
-    </p>
-    <p>
-      Asıl mesleğim mühendislik, ancak gitarla olan bağımı hiçbir zaman koparmadım.
-      Tarz ayırt etmeden her türlü gitar müziği ilgimi çekiyor.
-    </p>
-    <p>
-      Lise yıllarımda üç kez liselerarası müzik yarışmasına katıldım. Bunlardan
-      birinde grubumuzla İstanbul'da finalistler arasına girdik.
-    </p>
+    <section>
+      <h2>Nasıl başlıyoruz?</h2>
+      <ol class="adimlar">
+        <li><h3>Tanışma dersi</h3><p>Seviyeni ve hedeflerini konuşuyoruz.</p></li>
+        <li><h3>Sana özel plan</h3><p>Neye, hangi sırayla çalışacağımızı belirliyoruz.</p></li>
+        <li><h3>Haftalık dersler</h3><p>Düzenli ders ve ödevlerle adım adım ilerliyoruz.</p></li>
+      </ol>
+    </section>
 
-    <h2>Kısaca</h2>
-    <ul>
-      <li><span class="ikon"><svg><use href="#i-nota"/></svg></span>6 yaşında piyanoyla müziğe başlangıç</li>
-      <li><span class="ikon"><svg><use href="#i-gitar"/></svg></span>12 yaşından beri gitar</li>
-      <li><span class="ikon"><svg><use href="#i-kupa"/></svg></span>3 kez liselerarası müzik yarışması, 1 kez İstanbul finalisti</li>
-    </ul>
+    <section>
+      <h2>Ders seçenekleri</h2>
+      <div class="secenekler">
+        <div class="secenek">
+          <span class="ikon"><svg><use href="#i-kisi"/></svg></span>
+          <div><h3>Yüz yüze</h3><p>Birebir, aynı ortamda ders.</p></div>
+        </div>
+        <div class="secenek">
+          <span class="ikon"><svg><use href="#i-ekran"/></svg></span>
+          <div><h3>Online</h3><p>Görüntülü görüşmeyle, bulunduğun yerden.</p></div>
+        </div>
+      </div>
+      <p class="soluk">Ücret ve uygun saatler için iletişime geçebilirsin.</p>
+    </section>
 
-    <h2>İletişim</h2>
-    <ul class="iletisim">
-      <li><span class="ikon"><svg><use href="#i-posta"/></svg></span><a href="mailto:iletisim@cankayan.com.tr">iletisim@cankayan.com.tr</a></li>
-      <li><span class="ikon"><svg><use href="#i-telefon"/></svg></span><a href="tel:+905419581181">+90 541 958 11 81</a></li>
-    </ul>
+    <section>
+      <h2>Hakkımda</h2>
+      <p>
+        Altı yaşında piyanoyla müziğe başladım, on iki yaşından beri gitar çalıyorum. Asıl mesleğim
+        mühendislik, ancak gitarı hiç bırakmadım ve her tarza ilgi duyuyorum. Lisedeyken üç kez
+        liselerarası müzik yarışmasına katıldım, bir keresinde grubumuzla İstanbul'da finale kaldık.
+      </p>
+    </section>
 
-    <!-- Lucide ikonları (ISC lisansı) -->
-    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
-      <symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
-      <symbol id="i-gitar" viewBox="0 0 24 24"><path d="m11.9 12.1 4.514-4.514"/><path d="M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z"/><path d="m6 16 2 2"/><path d="M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2z"/></symbol>
-      <symbol id="i-kupa" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
-      <symbol id="i-posta" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-      <symbol id="i-telefon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
-    </svg>
+    <section id="iletisim">
+      <h2>İletişim</h2>
+      <ul class="iletisim">
+        <li><span class="ikon"><svg><use href="#i-posta"/></svg></span><a href="mailto:iletisim@cankayan.com.tr">iletisim@cankayan.com.tr</a></li>
+        <li><span class="ikon"><svg><use href="#i-telefon"/></svg></span><a href="tel:+905419581181">+90 541 958 11 81</a></li>
+      </ul>
+    </section>
 
     <footer>
       Fotoğraf: <a href="https://commons.wikimedia.org/wiki/File:Fender_Deluxe_Stratocaster_HSS_(2008-11-02_12.49.15_by_irish10567).jpg">irish10567</a>, Wikimedia Commons (CC BY 2.0)
     </footer>
   </main>
+
+  <!-- Lucide ikonları (ISC lisansı) -->
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <symbol id="i-nota" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+    <symbol id="i-gitar" viewBox="0 0 24 24"><path d="m11.9 12.1 4.514-4.514"/><path d="M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z"/><path d="m6 16 2 2"/><path d="M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2z"/></symbol>
+    <symbol id="i-kitap" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-takvim" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></symbol>
+    <symbol id="i-kisi" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-ekran" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
+    <symbol id="i-posta" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-telefon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  </svg>
 </body>
 </html>
