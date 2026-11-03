@@ -1,1 +1,6 @@
 .claude/
+
+# Taslak özgeçmiş sayfaları: hazır olunca bu satırları silip commit et
+docs/ozgecmis.css
+docs/ozgecmis-muzik.html
+docs/ozgecmis-profesyonel.html

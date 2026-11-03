@@ -106,14 +106,11 @@
 
     /* Özgeçmiş butonları */
     .ozgecmisler { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
-    .ozgecmisler a {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 20px 8px 8px; border-radius: 999px;
-      border: 1.5px solid var(--cizgi); background: var(--yuzey);
-      color: var(--yazi); font-weight: 800; text-decoration: none;
-    }
-    .ozgecmisler a:hover { border-color: var(--vurgu); color: var(--vurgu); }
-    .ozgecmisler .ikon { width: 34px; height: 34px; }
+    .ozgecmisler .buton { display: inline-flex; align-items: center; gap: 10px; padding: 8px 24px 8px 8px; transition: filter .15s, transform .15s; }
+    .ozgecmisler .buton:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    /* Sayfa hazır olana kadar tıklanmaz; canlıya alırken data-href'i href yap ve aria-disabled'ı sil */
+    .ozgecmisler .buton[aria-disabled="true"] { cursor: default; }
+    .ozgecmisler .ikon { width: 36px; height: 36px; background: var(--bg); }
     .ozgecmisler .ikon svg { width: 17px; height: 17px; }
 
     @media (max-width: 600px) {
@@ -194,8 +191,8 @@
 		kendi müzik zevklerine ve hedeflerine uygun bir gelişim süreci sunmak benim için daha önemli hale geldi.
       </p>
       <div class="ozgecmisler">
-        <a href="ozgecmis-muzik.html"><span class="ikon"><svg><use href="#i-nota"/></svg></span>Müzikal özgeçmişim</a>
-        <a href="ozgecmis-profesyonel.html"><span class="ikon"><svg><use href="#i-canta"/></svg></span>Profesyonel özgeçmişim</a>
+        <a class="buton" data-href="ozgecmis-muzik.html" aria-disabled="true" title="Yakında"><span class="ikon"><svg><use href="#i-nota"/></svg></span>Müzikal özgeçmişim</a>
+        <a class="buton" data-href="ozgecmis-profesyonel.html" aria-disabled="true" title="Yakında"><span class="ikon"><svg><use href="#i-canta"/></svg></span>Profesyonel özgeçmişim</a>
       </div>
     </section>
 
